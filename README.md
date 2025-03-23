@@ -14,6 +14,34 @@ We evaluate LambdaFair on three publicly available datasets, comparing its perfo
 Our experiments demonstrate that, on average, LambdaFair achieves 6.7\% higher effectiveness and only 0.4\% lower fairness compared to state-of-the-art fairness-oriented learning algorithms.
 This highlights LambdaFair’s ability to improve fairness without sacrificing the model's effectiveness.
 
+Implementation
+---
+
+**LambdaFair** is a learning-to-rank strategy for fair and effective ranking, built on top of [LightGBM](https://github.com/microsoft/LightGBM).
+
+Usage
+---
+
+**LambdaFair** is accessible through the ``lambdarank`` parameter ``lambda_fair`` (or ``lambda_fair``) with the following value:
+  - ``"plain"`` to enforce the original algorithm (no Lambda-eX) (default).
+  - ``"rnd"`` to enforce LambdaFair with the rND+ strategy (Fairness driven).
+  - ``"ndcg"`` to enforce LambdaFair with the NDCG+ strategy (Effectiveness driven).
+  - ``"delta"`` to enforce LambdaFair with the ΔrND strategy (Variation on swap).
+
+Loss functions
+---
+The code implements three loss functions: LambdaRank, NDCG-Loss2 and NDCG-Loss2++. The three loss functions are accessible through the ``lambdarank`` parameters ``lambdarank_weight`` (or ``lr_mu``) and ``lambdaloss_weight`` (or ``ll_mu``), with the following combinations:
+  - ``lambdarank_weight=1`` and ``lambdaloss_weight=0`` to enforce the LambdaRank loss function (default).
+  - ``lambdarank_weight=0`` and ``lambdaloss_weight=1`` to enforce the NDCG-Loss2 loss function.
+  - ``lambdarank_weight=1`` and ``lambdaloss_weight>0`` to enforce the NDCG-Loss2++ loss function.
+
+Examples
+---
+ - for LambdaMART: ``objective="lambdarank"``.
+ - for LambdaMART-eX random: ``objective="lambdarank"`` and ``lambda_ex="random"``.
+ - for LambdaLoss-eX static with NDCG-Loss2++: ``objective="lambdarank"``, ``lambda_ex="static"``, and ``lambdaloss_weight=0.5``.
+ - for LambdaLoss-eX all-random with NDCG-Loss2: ``objective="lambdarank"``, ``lambdaex="all-random"``, ``lr_mu=0`` and ``ll_mu=1``.
+
 Installation
 ---
 Follow the [installation instructions](https://lightgbm.readthedocs.io/en/latest/Installation-Guide.html) as mentioned in the LightGBM GitHub [repository](https://github.com/microsoft/LightGBM).
