@@ -21,7 +21,7 @@ The code also implements the [rND](https://dl.acm.org/doi/10.1145/3085504.308552
 
 Usage
 ---
-**LambdaFair** is accessible through the ``lambdarank`` parameter ``lambda_fair`` (or ``lambda_fair``) with the following value:
+**LambdaFair** is accessible through the ``lambdarank`` parameter ``lambda_fair`` (or ``lambdafair``) with the following value:
   - ``"plain"`` to enforce the original algorithm (no Lambda-eX) (default).
   - ``"rnd"`` to enforce LambdaFair with the rND+ strategy (Fairness driven).
   - ``"ndcg"`` to enforce LambdaFair with the NDCG+ strategy (Effectiveness driven).
