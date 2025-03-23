@@ -32,7 +32,6 @@ Parameters
 LambdaFair use the folowwing parameters to works
   - ``eval_at_rND`` similar to ``ndcg_eval_at`` it allow to specify the rND metric evalaution cutoff.
   - ``alpha_lambdafair`` is the weight representing the relative importance of the two metrics, rND and NDCG, in the convex combination. The parameter is defined in [0,1].
-  - ``lambdarank_weight=1`` and ``lambdaloss_weight>0`` to enforce the NDCG-Loss2++ loss function.
   - ``rnd_step`` specifies the rND bin size in the training and evaluation process.
   - ``train_group_labels`` is the string encoding the document group membership labels. The labels must be encoded with the character '0' for non-protected and '1' for protected, i.e., '01101...'.
 
