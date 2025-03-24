@@ -76,14 +76,14 @@ def init_dataset(data_path, param_text):
     print('[INFO] Testing set loaded:')
     return train_data, train_labels, train_query_lens, valid_data, valid_labels, valid_query_lens, test_data, test_labels, test_query_lens
 
-def prepare_lightgbm_dataset(train_set, eval_set, eval_group, eval_names, items_group):
+def prepare_lightgbm_dataset(train_set, eval_set, eval_group, eval_names, eval_group_labels):
     lightgbm_set = []
-    train_set = lgb.Dataset(train_set[0], label=train_set[1], group=train_set[2], params={'name' : 'train_set', 'items_group' : items_group[0]})
+    train_set = lgb.Dataset(train_set[0], label=train_set[1], group=train_set[2], params={'eval_group_labels' : eval_group_labels[0]})
     lightgbm_set = [train_set]
 
     # loads validation and test set
     for i, data in enumerate(eval_set):
-        ds = lgb.Dataset(data[0], data[1], group=eval_group[i], reference=train_set, params={'name' : eval_names[i], 'items_group' : items_group[i]})
+        ds = lgb.Dataset(data[0], data[1], group=eval_group[i], reference=train_set, params={'eval_group_labels' : eval_group_labels[i]})
         lightgbm_set.append(ds)
 
     new_eval_names = ['train_set'] + eval_names  
@@ -95,11 +95,10 @@ def load_data_npy(filename):
     data = X[:,:-2]
     labels = X[:,-2]
     query_lens = np.asarray([len(list(group)) for key, group in groupby(X[:,-1])])
-
     return data, labels.astype(int), query_lens.astype(int)
 
-def get_group(data, feature, threshold):
-    return ''.join([str(int(m)) for m in data[:, feature] < threshold])
+def get_group_labels(data, feature, threshold):
+    return (data[:, feature] < threshold).astype(int)
 
 def dump_obj(obj, path, filename):
     dump(obj, open(os.path.join(path, filename + '.pkl'), 'wb'))

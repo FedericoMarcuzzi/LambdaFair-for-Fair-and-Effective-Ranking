@@ -40,12 +40,15 @@ class FairMetric : public Metric {
         for (auto k : eval_at_)
             name_.emplace_back(std::string("rND@") + std::to_string(k));
         
-        group_labels = metadata.group_labels();
+        group_labels_str = metadata.group_labels();
+        group_labels = metadata.eval_group_labels();
 
-        items_group.resize(num_data);
-        for (size_t i = 0; i < items_group.size(); ++i) {
-            items_group[i] = group_labels[i] - '0';
+        /*
+        group_labels.resize(num_data);
+        for (size_t i = 0; i < group_labels.size(); ++i) {
+            group_labels[i] = group_labels_str[i] - '0';
         }
+        */
 
         num_queries_ = metadata.num_queries();
         // get query boundaries
@@ -57,7 +60,7 @@ class FairMetric : public Metric {
         #pragma omp parallel for num_threads(OMP_NUM_THREADS()) schedule(static)
         for (data_size_t i = 0; i < num_queries_; ++i) {
             max_rnds_[i].resize(eval_at_.size(), 0.0f);
-            std::vector<data_size_t> query_items_group(items_group.begin() + query_boundaries_[i], items_group.begin() + query_boundaries_[i + 1]);
+            std::vector<data_size_t> query_items_group(group_labels.begin() + query_boundaries_[i], group_labels.begin() + query_boundaries_[i + 1]);
             for (size_t j = 0; j < eval_at_.size(); ++j) {
                 max_rnds_[i][j] = RNDCalculator::max_rD(query_items_group, rnd_step, eval_at_[j]);
             }
@@ -93,7 +96,7 @@ class FairMetric : public Metric {
         for (data_size_t i = 0; i < num_queries_; ++i) {
             const int tid = omp_get_thread_num();
             const double* query_score = score + query_boundaries_[i];
-            std::vector<data_size_t> query_items_group(items_group.begin() + query_boundaries_[i], items_group.begin() + query_boundaries_[i + 1]);            
+            std::vector<data_size_t> query_items_group(group_labels.begin() + query_boundaries_[i], group_labels.begin() + query_boundaries_[i + 1]);            
             for (size_t j = 0; j < eval_at_.size(); ++j) {
                 result_buffer_[tid][j] += RNDCalculator::rND(query_items_group, query_score, rnd_step, max_rnds_[i][j], eval_at_[j]);
             }
@@ -112,9 +115,9 @@ class FairMetric : public Metric {
 
    private:
     int rnd_step;
-    std::string group_labels;
+    std::string group_labels_str;
 
-    std::vector<data_size_t> items_group;
+    std::vector<int> group_labels;
 
     /*! \brief Name of test set */
     std::vector<std::string> name_;

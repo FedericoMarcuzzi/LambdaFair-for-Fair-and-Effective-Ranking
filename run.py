@@ -32,24 +32,23 @@ upd_params = {
     'num_threads' : num_threads,
     'metric': ['ndcg', 'rnd'],
     'ndcg_eval_at': args.ndcg_eval_at,
-    'eval_at_rND' : args.rnd_eval_at,
+    'rnd_eval_at' : args.rnd_eval_at,
     'alpha_lambdafair': args.alpha,
-    'beta_lambdafair': 1. - args.alpha,
     'rnd_step': args.rnd_step,
     'lambdarank_truncation_level' : args.train_cutoff,
     'lambdarank_norm' : True,
-    'train_group_labels' : get_group(train_data, feature, threshold) # get protected group labels for training
+    'group_labels' : get_group_labels(train_data, feature, threshold), # get protected group labels for training
 }
 
-upd_params['train_group_labels'] = get_group(train_data, feature, threshold) # get protected group labels for training
+# {"eval_at_rND", {"rnd_eval_at", "rnd_at"}},
 
 params.update(upd_params)
 
 # get protected group labels for evaluation
-items_group = [
-    get_group(train_data, feature, threshold), 
-    get_group(valid_data, feature, threshold), 
-    get_group(test_data, feature, threshold)
+eval_group_labels = [
+    get_group_labels(train_data, feature, threshold), 
+    get_group_labels(valid_data, feature, threshold), 
+    get_group_labels(test_data, feature, threshold)
 ]
 
 # removes protected features
@@ -66,7 +65,7 @@ if "mslr" in params:
 eval_set = [(train_data, train_labels), (valid_data, valid_labels), (test_data, test_labels)]
 eval_group = [train_query_lens, valid_query_lens, test_query_lens]
 eval_names = ['train', 'valid', 'test']
-data_sets, data_names = prepare_lightgbm_dataset((train_data, train_labels, train_query_lens), eval_set, eval_group, eval_names, items_group=items_group)
+data_sets, data_names = prepare_lightgbm_dataset((train_data, train_labels, train_query_lens), eval_set, eval_group, eval_names, eval_group_labels=eval_group_labels)
 
 # evaluation over iteration
 results = {}

@@ -259,14 +259,6 @@ struct Config {
   // desc = **Note**: setting this to ``true`` may slow down the training
   // desc = **Note**: to avoid potential instability due to numerical issues, please set ``force_col_wise=true`` or ``force_row_wise=true`` when setting ``deterministic=true``
   bool deterministic = false;
-  
-    
-  // ADDED
-  int rnd_step;
-  double alpha_lambdafair;
-  double beta_lambdafair;
-  std::string train_group_labels;
-  std::string items_group;
     
   #ifndef __NVCC__
   #pragma endregion
@@ -1049,7 +1041,13 @@ struct Config {
   // desc = used only with ``ndcg`` and ``map`` metrics
   // desc = `NDCG <https://en.wikipedia.org/wiki/Discounted_cumulative_gain#Normalized_DCG>`__ and `MAP <https://makarandtapaswi.wordpress.com/2012/07/02/intuition-behind-average-precision-and-map/>`__ evaluation positions, separated by ``,``
   std::vector<int> eval_at;
+
+  // rND
   std::vector<int> eval_at_rND;
+  std::vector<int> group_labels;
+  std::vector<int> eval_group_labels;
+  int rnd_step;
+  double alpha_lambdafair;
 
   // check = >0
   // desc = used only with ``multi_error`` metric

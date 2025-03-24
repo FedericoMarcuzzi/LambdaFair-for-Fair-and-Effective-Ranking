@@ -79,6 +79,7 @@ class Metadata {
   void Init(data_size_t num_data, int weight_idx, int query_idx);
 
   void Init(data_size_t num_data, int weight_idx, int query_idx, std::string tipo); // rnd
+  void Init(data_size_t num_data, int weight_idx, int query_idx, std::vector<int> eval_group_labels); // rnd
 
   /*!
   * \brief Allocate space for label, weight (if exists), initial score (if exists) and query (if exists)
@@ -280,6 +281,10 @@ class Metadata {
     return group_labels_;
   }
 
+  inline const std::vector<int> eval_group_labels() const {
+    return eval_group_labels_;
+  }
+
   /*!
   * \brief Get weights for queries, if not exists, will return nullptr
   * \return Pointer of weights for queries
@@ -369,6 +374,7 @@ class Metadata {
   data_size_t num_data_;
 
   std::string group_labels_;
+  std::vector<int> eval_group_labels_;
 
   /*! \brief Number of weights, used to check correct weight file */
   data_size_t num_weights_;

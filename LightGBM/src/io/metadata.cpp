@@ -64,9 +64,10 @@ void Metadata::Init(data_size_t num_data, int weight_idx, int query_idx) {
   }
 }
 
-void Metadata::Init(data_size_t num_data, int weight_idx, int query_idx, std::string group_labels_str) {
+void Metadata::Init(data_size_t num_data, int weight_idx, int query_idx, std::vector<int> eval_group_labels) {
   num_data_ = num_data;
-  group_labels_ = group_labels_str;
+  //group_labels_ = group_labels_str;
+  eval_group_labels_ = eval_group_labels;
   
   label_ = std::vector<label_t>(num_data_);
   if (weight_idx >= 0) {

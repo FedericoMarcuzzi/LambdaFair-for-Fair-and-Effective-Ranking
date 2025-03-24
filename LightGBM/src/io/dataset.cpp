@@ -50,7 +50,7 @@ Dataset::Dataset(data_size_t num_data, const Config& io_config) {
   CHECK_GT(num_data, 0);
   data_filename_ = "noname";
   num_data_ = num_data;
-  metadata_.Init(num_data_, NO_SPECIFIC, NO_SPECIFIC, io_config.items_group);
+  metadata_.Init(num_data_, NO_SPECIFIC, NO_SPECIFIC, io_config.eval_group_labels);
   is_finish_load_ = false;
   wait_for_manual_finish_ = false;
   group_bin_boundaries_.push_back(0);

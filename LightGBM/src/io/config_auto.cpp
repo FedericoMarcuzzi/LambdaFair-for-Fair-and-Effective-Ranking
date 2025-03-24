@@ -166,6 +166,8 @@ const std::unordered_map<std::string, std::string>& Config::alias_table() {
         {"is_training_metric", "is_provide_training_metric"},
         {"train_metric", "is_provide_training_metric"},
         {"ndcg_eval_at", "eval_at"},
+        {"rnd_eval_at", "eval_at_rND"},
+        {"rnd_at", "eval_at_rND"},
         {"ndcg_at", "eval_at"},
         {"map_eval_at", "eval_at"},
         {"map_at", "eval_at"},
@@ -185,19 +187,13 @@ const std::unordered_set<std::string>& Config::parameter_set() {
     static std::unordered_set<std::string> params({
         "config",
 
-        // ADDED
+        // rND
         "lambda_fair",
-
-
         "rnd_step",
         "alpha_lambdafair",
-        "beta_lambdafair",
-        
-        "train_group_labels",
+        "group_labels",
+        "eval_group_labels",
         "eval_at_rND",
-        "items_group",
-
-        "protected_by_query",
 
         "task",
         "objective",
@@ -325,7 +321,9 @@ const std::unordered_set<std::string>& Config::parameter_set() {
         "metric_freq",
         "is_provide_training_metric",
         "eval_at",
-        "eval_at_rND"
+        "eval_at_rND",
+        "group_labels",
+        "eval_group_labels",
         "multi_error_top_k",
         "auc_mu_weights",
         "num_machines",
@@ -365,11 +363,7 @@ void Config::GetMembersFromString(const std::unordered_map<std::string, std::str
 
     // LambdaFair 
     GetInt(params, "rnd_step", &rnd_step);
-    GetDouble(params, "beta_lambdafair", &beta_lambdafair);
     GetDouble(params, "alpha_lambdafair", &alpha_lambdafair);
-    GetString(params, "train_group_labels", &train_group_labels);
-    GetString(params, "items_group", &items_group);
-
     GetBool(params, "deterministic", &deterministic);
     GetBool(params, "force_col_wise", &force_col_wise);
 
@@ -661,6 +655,14 @@ void Config::GetMembersFromString(const std::unordered_map<std::string, std::str
         eval_at_rND = Common::StringToArray<int>(tmp_str, ',');
     }
 
+    if (GetString(params, "group_labels", &tmp_str)) {
+        group_labels = Common::StringToArray<int>(tmp_str, ',');
+    }
+
+    if (GetString(params, "eval_group_labels", &tmp_str)) {
+        eval_group_labels = Common::StringToArray<int>(tmp_str, ',');
+    }
+
     GetInt(params, "multi_error_top_k", &multi_error_top_k);
     CHECK_GT(multi_error_top_k, 0);
 
@@ -699,9 +701,7 @@ std::string Config::SaveMembersToString() const {
     str_buf << "[lambda_fair: " << lambda_fair << "]\n";
 
     str_buf << "[rnd_step: " << rnd_step << "]\n";
-    str_buf << "[beta_lambdafair: " << beta_lambdafair << "]\n";
     str_buf << "[alpha_lambdafair: " << alpha_lambdafair << "]\n";
-    str_buf << "[train_group_labels: " << train_group_labels << "]\n";
 
     str_buf << "[data: " << data << "]\n";
     str_buf << "[valid: " << Common::Join(valid, ",") << "]\n";
@@ -805,6 +805,8 @@ std::string Config::SaveMembersToString() const {
     str_buf << "[lambdarank_position_bias_regularization: " << lambdarank_position_bias_regularization << "]\n";
     str_buf << "[eval_at: " << Common::Join(eval_at, ",") << "]\n";
     str_buf << "[eval_at_rND: " << Common::Join(eval_at_rND, ",") << "]\n";
+    str_buf << "[group_labels: " << Common::Join(group_labels, ",") << "]\n";
+    str_buf << "[eval_group_labels: " << Common::Join(eval_group_labels, ",") << "]\n";
     str_buf << "[multi_error_top_k: " << multi_error_top_k << "]\n";
     str_buf << "[auc_mu_weights: " << Common::Join(auc_mu_weights, ",") << "]\n";
     str_buf << "[num_machines: " << num_machines << "]\n";
@@ -949,7 +951,9 @@ const std::unordered_map<std::string, std::vector<std::string>>& Config::paramet
         {"metric_freq", {"output_freq"}},
         {"is_provide_training_metric", {"training_metric", "is_training_metric", "train_metric"}},
         {"eval_at", {"ndcg_eval_at", "ndcg_at", "map_eval_at", "map_at"}},
-        {"eval_at_rND", {}},
+        {"eval_at_rND", {"rnd_eval_at", "rnd_at"}},
+        {"group_labels", {}},
+        {"eval_group_labels", {}},
         {"multi_error_top_k", {}},
         {"auc_mu_weights", {}},
         {"num_machines", {"num_machine"}},
@@ -1095,6 +1099,8 @@ const std::unordered_map<std::string, std::string>& Config::ParameterTypes() {
         {"is_provide_training_metric", "bool"},
         {"eval_at", "vector<int>"},
         {"eval_at_rND", "vector<int>"},
+        {"group_labels", "vector<int>"},
+        {"eval_group_labels", "vector<int>"},
         {"multi_error_top_k", "int"},
         {"auc_mu_weights", "vector<double>"},
         {"num_machines", "int"},

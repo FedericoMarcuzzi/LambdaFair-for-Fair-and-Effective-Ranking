@@ -156,13 +156,8 @@ class LambdarankNDCG : public RankingObjective {
 
         rnd_step = config.rnd_step;
         alpha = config.alpha_lambdafair;
-        beta = config.beta_lambdafair;
-        train_group_labels = config.train_group_labels;
-
-        group.resize(train_group_labels.length());
-        for (size_t i = 0; i < group.size(); ++i) {
-            group[i] = train_group_labels[i] - '0';
-        }
+        beta = 1.0 - alpha;
+        group = config.group_labels;
 
         // initialize DCG calculator
         DCGCalculator::DefaultLabelGain(&label_gain_);
@@ -681,7 +676,6 @@ class LambdarankNDCG : public RankingObjective {
     double alpha = 1.0;
     double beta = 0.0;
     bool is_normal_train = 1;
-    string train_group_labels;
     std::vector<data_size_t> group;
     std::vector<double> max_rnds;
     std::vector<double> rND_log_disc;
