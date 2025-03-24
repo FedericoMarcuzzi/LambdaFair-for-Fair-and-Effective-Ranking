@@ -1,7 +1,6 @@
 LambdaFair-for-Fair-and-Effective-Ranking
 ===============================
-
-This code is for ECIR 2025 full paper [LambdaFair for Fair and Effective Ranking]().
+This code is for the ECIR 2025 special track "IR for Good" paper [LambdaFair for Fair and Effective Ranking]().
 
 Abstract
 ---
@@ -43,7 +42,6 @@ Where needed, replace the repository ``https://github.com/microsoft/LightGBM`` w
 
 Citation
 ---
-
 ```
 Soon.
 ```
