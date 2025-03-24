@@ -11,7 +11,7 @@ Consequently, ensuring fair treatment of protected groups has become a pivotal c
 This work introduces LambdaFair, a novel in-processing method designed to jointly optimize effectiveness and fairness ranking metrics.
 LambdaFair builds upon the LambdaMART algorithm, harnessing its ability to train highly effective models through additive ensembles of decision trees while integrating fairness awareness.
 We evaluate LambdaFair on three publicly available datasets, comparing its performance with state-of-the-art learning algorithms in terms of both fairness and effectiveness.
-Our experiments demonstrate that, on average, LambdaFair achieves 6.7\% higher effectiveness and only 0.4\% lower fairness compared to state-of-the-art fairness-oriented learning algorithms.
+Our experiments demonstrate that, on average, LambdaFair achieves 6.7% higher effectiveness and only 0.4% lower fairness compared to state-of-the-art fairness-oriented learning algorithms.
 This highlights LambdaFair’s ability to improve fairness without sacrificing the model's effectiveness.
 
 Implementation
