@@ -1,5 +1,4 @@
 from misc import *
-import sys
 import numpy as np
 import argparse
 
@@ -37,10 +36,8 @@ upd_params = {
     'rnd_step': args.rnd_step,
     'lambdarank_truncation_level' : args.train_cutoff,
     'lambdarank_norm' : True,
-    'group_labels' : get_group_labels(train_data, feature, threshold), # get protected group labels for training
+    'group_labels' : get_group_labels(train_data, feature, threshold),
 }
-
-# {"eval_at_rND", {"rnd_eval_at", "rnd_at"}},
 
 params.update(upd_params)
 
