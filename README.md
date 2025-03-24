@@ -29,7 +29,7 @@ Usage
 
 Parameters
 ---
-LambdaFair use the folowwing parameters to works
+**LambdaFair** requires the folowwing parameters:
   - ``rnd_eval_at`` (or ``rnd_at``, ``eval_at_rND``) similar to ``ndcg_eval_at``, specifies a list of cutoffs used for evaluation with the rND metric.
   - ``alpha_lambdafair`` is the weight representing the relative importance of the two metrics, rND and NDCG, in the convex combination. The parameter is defined in ``[0,1]``.
   - ``rnd_step`` specifies the rND bin size used for train and evaluation.
