@@ -43,25 +43,5 @@ Where needed, replace the repository ``https://github.com/microsoft/LightGBM`` w
 Citation
 ---
 ```
-@inproceedings{DBLP:conf/iir/MarcuzziL024,
-  author       = {Federico Marcuzzi and
-                  Claudio Lucchese and
-                  Salvatore Orlando},
-  editor       = {Kevin Roitero and
-                  Marco Viviani and
-                  Eddy Maddalena and
-                  Stefano Mizzaro},
-  title        = {LambdaFair: a Fair and Effective LambdaMART},
-  booktitle    = {Proceedings of the 14th Italian Information Retrieval Workshop, Udine,
-                  Italy, September 5-6, 2024},
-  series       = {{CEUR} Workshop Proceedings},
-  volume       = {3802},
-  pages        = {86},
-  publisher    = {CEUR-WS.org},
-  year         = {2024},
-  url          = {https://ceur-ws.org/Vol-3802/paper2.pdf},
-  timestamp    = {Thu, 07 Nov 2024 16:44:43 +0100},
-  biburl       = {https://dblp.org/rec/conf/iir/MarcuzziL024.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
-}
+Soon.
 ```
