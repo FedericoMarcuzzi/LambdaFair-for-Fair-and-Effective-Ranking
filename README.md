@@ -43,5 +43,24 @@ Where needed, replace the repository ``https://github.com/microsoft/LightGBM`` w
 Citation
 ---
 ```
-Soon.
+@InProceedings{10.1007/978-3-031-88717-8_15,
+  author="Marcuzzi, Federico
+  and Lucchese, Claudio
+  and Orlando, Salvatore",
+  editor="Hauff, Claudia
+  and Macdonald, Craig
+  and Jannach, Dietmar
+  and Kazai, Gabriella
+  and Nardini, Franco Maria
+  and Pinelli, Fabio
+  and Silvestri, Fabrizio
+  and Tonellotto, Nicola",
+  title="LambdaFair for Fair and Effective Ranking",
+  booktitle="Advances in Information Retrieval",
+  year="2025",
+  publisher="Springer Nature Switzerland",
+  address="Cham",
+  pages="197--213",
+  isbn="978-3-031-88717-8"
+}
 ```
